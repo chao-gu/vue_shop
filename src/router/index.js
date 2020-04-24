@@ -4,11 +4,23 @@ import VueRouter from 'vue-router'
 import Login from '../components/Login.vue'
 // home组件
 import Home from '../components/Home.vue'
+// home的子组件welcome组件
+import Welcome from '../components/Welcome.vue'
+// home的子组件菜单组件Users
+import Users from '../components/user/Users.vue'
 Vue.use(VueRouter)
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login },
-  { path: '/home', component: Home }
+  {
+    path: '/home',
+    component: Home,
+    redirect: '/welcome',
+    children: [
+      { path: '/welcome', component: Welcome },
+      { path: '/users', component: Users }
+    ]
+  }
 ]
 const router = new VueRouter({
   routes
