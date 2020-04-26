@@ -8,6 +8,10 @@ import Home from '../components/Home.vue'
 import Welcome from '../components/Welcome.vue'
 // home的子组件菜单组件Users
 import Users from '../components/user/Users.vue'
+// home的子组件菜单路由rights
+import Rights from '../components/power/Rights.vue'
+// home的子组件菜单路由roles
+import Roles from '../components/power/Roles.vue'
 Vue.use(VueRouter)
 const routes = [
   { path: '/', redirect: '/login' },
@@ -18,7 +22,9 @@ const routes = [
     redirect: '/welcome',
     children: [
       { path: '/welcome', component: Welcome },
-      { path: '/users', component: Users }
+      { path: '/users', component: Users },
+      { path: '/rights', component: Rights },
+      { path: '/roles', component: Roles }
     ]
   }
 ]
