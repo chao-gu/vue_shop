@@ -12,6 +12,8 @@ import Users from '../components/user/Users.vue'
 import Rights from '../components/power/Rights.vue'
 // home的子组件菜单路由roles
 import Roles from '../components/power/Roles.vue'
+// home的子路由菜单路由cate
+import Cate from '../components/goods/Cate.vue'
 Vue.use(VueRouter)
 const routes = [
   { path: '/', redirect: '/login' },
@@ -24,7 +26,8 @@ const routes = [
       { path: '/welcome', component: Welcome },
       { path: '/users', component: Users },
       { path: '/rights', component: Rights },
-      { path: '/roles', component: Roles }
+      { path: '/roles', component: Roles },
+      { path: '/categories', component: Cate }
     ]
   }
 ]
