@@ -12,13 +12,13 @@
 
 - 电商后台管理系统用于管理用户账号、商品分类、商品信息、订单、数据统计等业务功能。
 
-![mall_desc01](./src/assets/mall_desc01.png)
+![mall_desc01](https://github.com/chao-gu/vue_shop/blob/master/src/assets/mall_desc01.png)
 
 ### 1.3 电商后台管理系统的开发模式（前后端分离）
 
 - 电商后台管理系统整体采用前后端分离的开发模式，其中前端项目是基于 Vue 技术栈的 SPA 项目。
 
-![mall_DevMode](./src/assets/mall_DevMode.png)
+![mall_DevMode](https://github.com/chao-gu/vue_shop/blob/master/src/assets/mall_DevMode.png)
 
 ### 1.4 电商后台管理系统的技术选型
 
@@ -63,19 +63,19 @@
 
 #### 插件
 
-![mall_plugin](./src/assets/mall_plugin.png)
+![mall_plugin](https://github.com/chao-gu/vue_shop/blob/master/src/assets/mall_plugin.png)
 
 ### 依赖
 
 #### 运行依赖
 
-![mall_depend1](./src/assets/mall_depend1.png)
+![mall_depend1](https://github.com/chao-gu/vue_shop/blob/master/src/assets/mall_depend1.png)
 
 #### 开发依赖
 
-![mall_depend2](./src/assets/mall_depend2.png)
+![mall_depend2](https://github.com/chao-gu/vue_shop/blob/master/src/assets/mall_depend2.png)
 
-![mall_depend3](./src/assets/mall_depend3.png)
+![mall_depend3](https://github.com/chao-gu/vue_shop/blob/master/src/assets/mall_depend3.png)
 
 ## 3、登录/退出功能
 
@@ -96,7 +96,7 @@
 
 ### 3.2 登录 — token 原理分析
 
-![mall_token](./src/assets/mall_token.png)
+![mall_token](https://github.com/chao-gu/vue_shop/blob/master/src/assets/mall_token.png)
 
 ### 3.3 登录功能实现
 
@@ -289,7 +289,7 @@ router.beforeEach((to, from, next) => {
 
 #### 1. 用户列表布局
 
-![mall_user](./src/assets/mall_user.png)
+![mall_user](https://github.com/chao-gu/vue_shop/blob/master/src/assets/mall_user.png)
 
 + 面包屑导航 el-breadcrumb
 + Element-UI 栅格系统基本使用 el-row
@@ -508,7 +508,7 @@ router.beforeEach((to, from, next) => {
 
 ### 6.1 角色列表
 
-![mall_roles](./src/assets/mall_roles.png)
+![mall_roles](https://github.com/chao-gu/vue_shop/blob/master/src/assets/mall_roles.png)
 
 ## 7、数据统计模块
 
@@ -516,7 +516,7 @@ router.beforeEach((to, from, next) => {
 
 - 数据统计模块主要用于统计电商平台运营过程的中的各种统计数据，并通过直观的可视化方式展示出来，方便相关运营和管理人员查看。
 
-![mall_reports](./src/assets/mall_reports.png)
+![mall_reports](https://github.com/chao-gu/vue_shop/blob/master/src/assets/mall_reports.png)
 
 ### 7.2 用户来源数据统计报表
 
@@ -549,12 +549,12 @@ router.beforeEach((to, from, next) => {
 
 ## 8、项目优化策略
 
-1. 生成打包报告
-    1. 通过命令行参数形式生成报告=>vue-cli-service build --report
-    2. 通过可视化ui面板直接查看报告(通过控制台和分析面板)
-2. 通过vue.config.js修改webpack的默认配置
+### 1. 生成打包报告
+- 通过命令行参数形式生成报告=>vue-cli-service build --report
+- 通过可视化ui面板直接查看报告(通过控制台和分析面板)
+### 2. 通过vue.config.js修改webpack的默认配置
 - 通过vue-cli 3.0工具生成的项目,默认隐藏了所有webpack的配置项,目的是为了屏蔽项目的配置过程,让开发人员把工作的 重心,放在具体功能和业务逻辑的实现上
-3. 为开发模式与发布模式指定不同的打包入口
+### 3. 为开发模式与发布模式指定不同的打包入口
 - 默认情况下,vue项目的开发与发布模式,共用同一个打包的入口文件(即src/main.js),为了将项目的开发过程与发布过程分离,可以为两种模式,各自指定打包的入口文件,即:
 - 1、开发模式入口文件 src/main-dev.js/ 
 - 2、发布模式入口文件 src/main-prod.js
@@ -577,5 +577,120 @@ router.beforeEach((to, from, next) => {
   }
 ```
 
-4. 第三方库启用CDN
-    1. 通过externals加载外部cdn资源
+### 4. 第三方库启用CDN
+
+#### 1. 通过externals加载外部cdn资源
+- 通过externals加载外部cdn资源
+- 默认情况下,通过import语法导入的第三方依赖包,最终会打包合并到同一个文件中,从而导致打包成功后,单文件体积过大的问题 => chunk-vendors体积过大
+- 为了解决上述问题,可以通过webpack的externals节点,来配置加载外部的cdn资源,凡是声明在externals中的第三方依赖包,都不会被打包
+1.  步骤1
+
+```
+module.exports = {
+  chainWebpack: config => {
+    config.when(process.env.NODE_ENV === 'production', config => {
+      config.entry('app').clear().add('./src/main-prod.js')
+      // 在vue.config.js如下配置
+      config.set('externals', {
+        vue: 'Vue',
+        'vue-router': 'VueRouter',
+        axios: 'axios',
+        lodash: '_',
+        echarts: 'echarts',
+        nporgress: 'NProgress',
+        'vue-quill-editor': 'VueQuillEditor'
+      })
+    })
+    config.when(process.env.NODE_ENV === 'development', config => {
+      config.entry('app').clear().add('./src/main-dev.js')
+    })
+  }
+}
+```
+2. 步骤2
+- 在public/index.html文件头部,将main-prod中的已经进行配置的import(样式表)删除替换为cdn引入
+
+```
+  <link href="https://cdn.bootcss.com/viewerjs/1.3.7/viewer.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/quill/2.0.0-dev.3/quill.bubble.min.css" rel="stylesheet">
+  ​<link href="https://cdn.bootcss.com/quill/2.0.0-dev.3/quill.core.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/quill/2.0.0-dev.3/quill.snow.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/element-ui/2.12.0/theme-chalk/index.css" rel="stylesheet">
+``` 
+
+3. 步骤3
+- 在public/index.html文件头部,将main-prod中的已经进行配置的import(js文件)删除替换为cdn引入
+
+```
+  <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+  <script src="https://cdn.bootcss.com/vue-router/3.1.3/vue-router.min.js"></script>
+  <script src="https://cdn.bootcss.com/axios/0.19.0/axios.min.js"></script>
+  <script src="https://cdn.bootcss.com/lodash.js/4.17.15/lodash.min.js"></script>
+  <script src="https://cdn.bootcss.com/echarts/4.4.0-rc.1/echarts.min.js"></script>
+  <script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="https://cdn.bootcss.com/quill/2.0.0-dev.3/quill.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-quill-editor@3.0.4/dist/vue-quill-editor.js"></script>
+  <script src="https://cdn.bootcss.com/viewerjs/1.3.7/viewer.min.js"></script>
+  <script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.min.js"></script>
+```
+
+4. cdn加速前后对比( chunk-vendors打包文件)
+
+#### 2. 使用cdn优化elementui打包
+
+- 具体操作流程
+
+1. 在main-prod.js中,注释掉element-ui按需加载的代码
+2. 在index.html头部区域中,通过cdn加载element-ui的js和css样式
+
+`<link href="https://cdn.bootcss.com/element-ui/2.12.0/theme-chalk/index.css" rel="stylesheet">`
+`<script src="https://cdn.bootcss.com/element-ui/2.12.0/index.js"></script>`
+
+#### 3. 首页内容定制
+
+- 不同打包环境下,首页内容可能会有所不同,通过插件方式定制
+
+- vue.config.js配置
+```
+  config.plugin('html').tap(args => {
+    args[0].isProd = true或false
+    return args
+})
+```
+
+- index.html修改
+```
+  <!-- 开发模式:使用import,发布模式:使用cdn -->
+  <title><%= htmlWebpackPlugin.options.isProd ? '' : 'dev-' %>vue-mall</title>
+  <% if(htmlWebpackPlugin.options.isProd) { %>
+    css | js放在这儿
+  <% } %>
+```
+
+#### 4. Element-UI组件按需加载
+
+#### 5. 路由懒加载
+
+- 在打包构建项目时,javascript包会变得特别大,影响页面加载,如果我们能把不同路由对应的组件分隔成不同的代码块,然后当路由被访问的时候才加载对应组件,这样更加高效
+
++ 安装@babel/plugin-syntax-dynamic-import包
++ 在babel.config.js配置文件声明该插件
++ 将路由改为按需加载形式
+
+```
+  // 示例:
+  const Foo = () => import(/* webpackChunkName: "group-foo" */ './Foo.vue')
+  const Bar = () => import(/* webpackChunkName: "group-foo" */ './Bar.vue')
+  const Baz = () => import(/* webpackChunkName: "group-foo" */ './Baz.vue')
+
+  // import Login from '../components/Login.vue'
+  const Login = () => import(/* webpackChunkName: "login_home_welcome" */ '../components/Login.vue')
+  // import Home from '../components/Home.vue'
+  const Home = () => import(/* webpackChunkName: "login_home_welcome" */ '../components/Home.vue')
+  // import Welcome from '../components/Welcome.vue'
+  const Welcome = () => import(/* webpackChunkName: "login_home_welcome" */ '../components/Welcome.vue')
+  ...
+```
+
+
