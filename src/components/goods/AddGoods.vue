@@ -303,4 +303,10 @@ export default {
 .el-tab-pane .btnAdd {
   margin-top: 15px;
 }
+.el-cascader {
+  width: 300px !important;
+}
+.el-cascader-panel {
+  height: 300px;
+}
 </style>

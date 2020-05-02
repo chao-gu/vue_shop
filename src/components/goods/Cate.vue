@@ -253,10 +253,14 @@ export default {
 .treeTable {
   margin-top: 15px;
 }
-.el-cascader-menu .el-cascader-menu__wrap {
-  height: 204px;
-}
+// .el-cascader-menu .el-cascader-menu__wrap {
+//   height: 204px;
+// }
 .el-cascader {
-  width: 100%;
+  margin-top: 0 !important;
+  width: 100% !important;
+}
+.el-cascader-menu{
+  height: 300px;
 }
 </style>
